@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_overridden_payslip_tmpl">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <link rel="stylesheet" type="text/css"
+                          href="l10n_tr_hr_payroll/static/src/css/payslip_report.css"/>
+                    <div class="page">
+                        <h3>
+                            <span t-field="o.employee_id"/>
+                            Payslip
+                        </h3>
+                        <div class="row">
+                            <div style="width: 45%;">
+                                <table class="table-classic" style="width: 100%; text-align:left;">
+                                    <tr>
+                                        <th>Çalışan İsmi</th>
+                                        <td>
+                                            <span t-field="o.employee_id"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ünvanı</th>
+                                        <td>
+                                            <span t-field="o.employee_id.job_id"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sözleşme Başlangıç Tarihi</th>
+                                        <td>
+                                            <span t-field="o.contract_id.date_start"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ödeme Dönemi</th>
+                                        <td>
+                                            <span t-field="o.payslip_period"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ödeme Zamanı</th>
+                                        <td>
+                                            <span t-field="o.date_to"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Kimlik No</th>
+                                        <td>
+                                            <span t-field="o.employee_id.identification_id"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="width: 50%; margin-left:10px; padding:30px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);">
+                                <h5 style="margin: 0; text-align:center;">Çalışan Net Ödeme</h5>
+                                <p style="text-align:center; color: green; font-size: 24px; margin: 10px 0;">
+                                    <t t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.code in ['amount_net'] )"
+                                       t-as="line">
+                                        <span t-field="line.total"/>
+                                    </t>
+                                </p>
+                                <p style="text-align:center;">
+
+                                    <span>Gün Sayısı: 30</span>
+                                    |
+                                    <span>İzin Sayısı: 2</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div style="height:15px;">
+
+                        </div>
+                        <div class="row">
+                            <table class="table-modern" style="text-align:left;">
+                                <thead>
+                                    <tr>
+                                        <th style="width:40%;">Earnings</th>
+                                        <th style="width:20%;">Days</th>
+                                        <th style="width:20%;">Hours</th>
+                                        <th style="width:20%;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total_amount" t-value="0"/>
+                                    <tr t-foreach="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.number_of_hours > 0 and worked_days.code != 'EKSIK_GUN' )"
+                                        t-as="worked_days">
+                                        <td>
+                                            <span t-field="worked_days.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="worked_days.number_of_days"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="worked_days.number_of_hours"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="o.line_ids.filtered(lambda line: line.code==worked_days.code).total"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                        <t t-set="total_amount" t-value="total_amount + worked_days.amount"/>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="font-weight: bold;">Normal Earnings Total:</td>
+                                        <td>
+                                            <span t-esc="total_amount"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div style="height:15px;">
+
+                        </div>
+                        <div class="row">
+                            <table class="table-modern1" style="text-align:left; margin-right:2px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width:40%;">Tax Deductions</th>
+                                        <th style="width:30%;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total_tax_deductions" t-value="0"/>
+                                    <tr t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.code in ['ssi_worker_prim_rate_deductions','ssi_unemployment_worker_prim_rate_deductions','after_incentives_income_tax_net','stamp_tax_deductions'] )"
+                                        t-as="line">
+                                        <td>
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.total"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                        <t t-set="total_tax_deductions" t-value="total_tax_deductions + line.total"/>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="font-weight: bold;">Total Deductions</td>
+                                        <td>
+                                            <span t-esc="total_tax_deductions"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <table class="table-modern1" style="text-align:left; margin-left:2px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width:40%;">Incentives</th>
+                                        <th style="width:30%;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total_incentives" t-value="0"/>
+                                    <tr t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.category_id.code in ['incentives'] )"
+                                        t-as="line">
+                                        <td>
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.total"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                        <t t-set="total_incentives" t-value="total_incentives + line.total"/>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="font-weight: bold;">Total Incentives</td>
+                                        <td>
+                                            <span t-esc="total_incentives"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div style="height:15px;">
+
+                        </div>
+                        <div class="row">
+                            <table class="table-modern1" style="text-align:left; margin-right:2px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width:40%;">Deductions</th>
+                                        <th style="width:30%;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total_deductions" t-value="0"/>
+                                    <tr t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.code in ['advance_deductions','syndicate_deductions','execution_deductions'] )"
+                                        t-as="line">
+                                        <td>
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.total"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                        <t t-set="total_deductions" t-value="total_deductions + line.total"/>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="font-weight: bold;">Total Deductions</td>
+                                        <td>
+                                            <span t-esc="total_deductions"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <table class="table-modern1" style="text-align:left; margin-left:2px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width:40%;">Employer Costs</th>
+                                        <th style="width:30%;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="total_employer_costs" t-value="0"/>
+                                    <tr t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.code in ['ssi_employer_prim_rate_basic','ssi_unemployment_employer_prim_rate_gross'] )"
+                                        t-as="line">
+                                        <td>
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.total"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                        <t t-set="total_employer_costs" t-value="total_employer_costs + line.total"/>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="font-weight: bold;">Total Employer Costs</td>
+                                        <td>
+                                            <span t-esc="total_employer_costs"
+                                                  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div style="height:15px;">
+
+                        </div>
+                        <div class="row">
+                            <div style="width: 48%; margin-right:10px; padding:20px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);">
+                                <h5 style="margin: 0; text-align:center;">Brüt Ücret</h5>
+                                <p style="text-align:center; color: green; font-size: 24px; margin: 10px 0;">
+                                    <t t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.code in ['amount_gross'] )"
+                                       t-as="line">
+                                        <span t-field="line.total"/>
+                                    </t>
+                                </p>
+                            </div>
+                            <div style="width: 48%; margin-left:10px; padding:20px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);">
+                                <h5 style="margin: 0; text-align:center;">Çalışan Maliyeti</h5>
+                                <p style="text-align:center; color: green; font-size: 24px; margin: 10px 0;">
+                                    <t t-set="total_employer_cost" t-value="0"/>
+                                    <t t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.code in ['amount_gross','ssi_employer_prim_rate_basic','ssi_unemployment_employer_prim_rate_gross'] )"
+                                       t-as="line">
+                                        <t t-set="total_employer_cost" t-value="total_employer_cost + line.total"/>
+                                    </t>
+                                    <span t-esc="total_employer_cost"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

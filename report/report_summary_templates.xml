@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_report" model="ir.ui.view">
+        <field name="name">hr.employee.report.view.form</field>
+        <field name="model">hr.employee.search</field>
+        <field name="arch" type="xml">
+            <form string="Generate Report">
+                <group>
+                    <group>
+                        <field name="employee_ids" widget="many2many_tags_avatar"/>
+                        <field name="date_from"/>
+                    </group>
+                    <group>
+                        <field name="month"/>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="generate_report" string="Generate Summary Report" type="object" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_report" model="ir.actions.act_window">
+        <field name="name">Print Summary Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.employee.search</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_employee_report"/>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+    </record>
+
+    <template id="report_summary_templates">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <head>
+                        <meta charset="utf-8"/>
+                        <title t-esc="get_calculate['month']"/>
+                        <style>
+                            #container {
+                            }
+
+                            .styled-table {
+                            border-collapse: collapse;
+                            margin: 25px 0;
+                            font-size: 0.90em;
+                            font-family: "Times New Roman", Times, serif;
+                            min-width: 310px;
+                            }
+                            .styled-table, th, td {
+                            border: 0.5px solid #D3D3D3;
+                            padding: 3px;
+                            }
+                            #container1 {
+                            }
+
+                            .styled-table {
+                            border-collapse: collapse;
+                            margin: 25px 0;
+                            font-family: "Times New Roman", Times, serif;
+                            min-width: 2700px;
+                            }
+
+                            #payslip_summary {
+                            position: fixed;
+                            top: 50px;
+                            left: 50px;
+                            width: auto;
+                            height: auto;
+                            <!--                            border: solid 2px #000000;-->
+                            display: inline-block;
+                            padding : 10px;
+                            }
+
+                            #second_part {
+                            position: fixed;
+                            top: 50px;
+                            left: 330px;
+                            width: auto;
+                            height: auto;
+                            <!--                            border: solid 2px #000000;-->
+                            display: inline-block;
+                            padding : 10px;
+                            }
+
+                            #third_part {
+                            position: fixed;
+                            top: 50px;
+                            left: 620px;
+                            width: auto;
+                            height: auto;
+                            <!--                            border: solid 2px #000000;-->
+                            display: inline-block;
+                            padding : 10px;
+                            }
+
+                            #fourth_part {
+                            position: fixed;
+                            top: 700px;
+                            left: 330px;
+                            width: auto;
+                            height: auto;
+                            <!--                            border: solid 2px #000000;-->
+                            display: inline-block;
+                            padding : 10px;
+                            }
+
+                            #fifth_part {
+                            position: fixed;
+                            top: 600px;
+                            left: 620px;
+                            width: auto;
+                            height: auto;
+                            <!--                            border: solid 2px #000000;-->
+                            display: inline-block;
+                            padding : 10px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                            <div id="container">
+                                <div id="payslip_summary">
+                                    <table class="styled-table">
+                                        <h4 style="text-align:left" class="table-active">BORDRO RAPORU</h4>
+                                        <tr style="background: #b7d5ac">
+                                            <th>Matrah</th>
+                                            <th>Tutar</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Toplam Sgk Primi</th>
+                                            <th>
+                                                <span t-esc="get_calculate['ssi_total']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>İşci Sgk Primi</td>
+                                            <td>
+                                                <span t-esc="get_calculate['ssi_worker']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>İşveren Sgk Primi</td>
+                                            <td>
+                                                <span t-esc="get_calculate['ssi_employer']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Toplam İşsizlik Primi</th>
+                                            <th>
+                                                <span t-esc="get_calculate['ssi_unemployment_total']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>İşsizlik İşçi Primi</td>
+                                            <td>
+                                                <span t-esc="get_calculate['ssi_unemployment_worker_rate']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>İşsizlik İşveren Primi</td>
+                                            <td>
+                                                <span t-esc="get_calculate['ssi_unemployment_employer_rate']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>AYLIK G.V. MATRAHI</th>
+                                            <th>
+                                                <span t-esc="get_calculate['income_tax_base']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>AYLIK G.V.</td>
+                                            <td>
+                                                <span t-esc="get_calculate['income_tax_first']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>G.V. İSTİSNASI</td>
+                                            <td>
+                                                <span t-esc="get_calculate['income_tax_incentives']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>G.V. NET</td>
+                                            <td>
+                                                <span t-esc="get_calculate['income_tax_last']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>D.V. MATRAHI</th>
+                                            <th>
+                                                <span t-esc="get_calculate['stamp_tax_base']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>D.V.</td>
+                                            <td>
+                                                <span t-esc="get_calculate['stamp_tax_first']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>D.V. İSTİSNASI</td>
+                                            <td>
+                                                <span t-esc="get_calculate['stamp_tax_incentives']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>D.V. NET</td>
+                                            <td>
+                                                <span t-esc="get_calculate['stamp_tax_last']"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="styled-table">
+                                        <tr>
+                                            <th>İşçi Kesinti Toplamı</th>
+                                            <th>
+                                                <span t-esc="get_calculate['worker_deductions_total']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>Net Aylık Ücret</th>
+                                            <th>
+                                                <span t-esc="get_calculate['net_amount_total']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>Net Diğer Gelirler</th>
+                                            <th>
+                                                <span t-esc="get_calculate['net_other_incomes_total']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>Net Gelirler Toplamı</th>
+                                            <th>
+                                                <span t-esc="get_calculate['net_incomes_total']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>Kesintiler Toplamı</th>
+                                            <th>
+                                                <span t-esc="get_calculate['total_deductions']"/>
+                                            </th>
+                                        </tr>
+                                        <tr class="table-active">
+                                            <th>Net Ele Geçen</th>
+                                            <th>
+                                                <span t-esc="get_calculate['net_profit']"/>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                    <table class="styled-table">
+                                        <h4 style="text-align:left" class="table-active">MESAİLER</h4>
+                                        <tr style="background: #b7d5ac">
+                                            <th>Mesai Tipi</th>
+                                            <th>Saat</th>
+                                            <th>Tutar</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Fazla Mesai</td>
+                                            <td>
+                                                <span t-esc="get_calculate['extra_shift']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="get_calculate['extra_shift_amount']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gece Mesai</td>
+                                            <td>
+                                                <span t-esc="get_calculate['overtime_shift']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="get_calculate['overtime_shift_amount']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bayram Mesai</td>
+                                            <td>
+                                                <span t-esc="get_calculate['holiday_shift']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="get_calculate['holiday_shift_amount']"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-active">
+                                            <th>Toplam</th>
+                                            <th>
+                                                <span t-esc="get_calculate['total_shift']"/>
+                                            </th>
+                                            <th>
+                                                <span t-esc="get_calculate['total_shift_amount']"/>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div id="second_part">
+                                    <table class="styled-table">
+                                        <h4 style="text-align:left" class="table-active">İŞÇİ MALİYETLERİ</h4>
+                                        <tr style="background: #b7d5ac">
+                                            <th>Matrah</th>
+                                            <th>Tutar</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Brüt Gelirler Toplamı</th>
+                                            <th>
+                                                <span t-esc="get_calculate['gross_amount_total']"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>İşveren Toplam Sgk</td>
+                                            <td>
+                                                <span t-esc="get_calculate['employer_deductions_total']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sgk Teşvikleri</td>
+                                            <td>
+                                                <span t-esc="incentives['total']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gelir Vergisi Teşvikleri</td>
+                                            <td>
+                                                <span t-esc="get_calculate['income_tax_incentives']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Damga Vergisi Teşvikleri</td>
+                                            <td>
+                                                <span t-esc="get_calculate['stamp_tax_incentives']"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-active">
+                                            <th>İşçi Maliyeti</th>
+                                            <th>
+                                                Brüt***
+                                            </th>
+                                        </tr>
+                                    </table>
+                                    <table class="styled-table">
+                                        <h4 style="text-align:left" class="table-active">GELİRLER RAPORU</h4>
+                                        <tr style="background: #b7d5ac">
+                                            <th>Gelir Türü</th>
+                                            <th>Net</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Asıl Ücret</td>
+                                            <td>
+                                                <span t-esc="get_calculate['net_amount_total']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Toplam Mesai</td>
+                                            <td>
+                                                <span t-esc="get_calculate['total_shift_amount']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>İkramiye</td>
+                                            <td>
+                                                <span t-esc="get_calculate['bonus_allowance']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Taşıt/Yol(Nakit)</td>
+                                            <td>
+                                                <span t-esc="get_calculate['road_allowance']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>İhbar Tazminatı</td>
+                                            <td>
+                                                <span t-esc="get_calculate['notice_allowance']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kıdem Tazminatı</td>
+                                            <td>
+                                                <span t-esc="get_calculate['severance_allowance']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Satış Primi</td>
+                                            <td>
+                                                <span t-esc="get_calculate['prim_allowance']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Diğer</td>
+                                            <td>
+                                                <span t-esc="get_calculate['other']"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="table-active">
+                                            <th>Toplam</th>
+                                            <th>
+                                                <span t-esc="get_calculate['net_incomes_total']"/>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="third_part">
+                                <table class="styled-table">
+                                    <h4 style="text-align:left" class="table-active">ÖDEMELER</h4>
+                                    <tr style="background: #b7d5ac">
+                                        <th>Kesinti Türü</th>
+                                        <th>Tutar</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Avans</td>
+                                        <td>
+                                            <span t-esc="get_calculate['advance_deductions']"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>İcra</td>
+                                        <td>
+                                            <span t-esc="get_calculate['execution_deductions']"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Eksik Gün</td>
+                                        <td>
+                                            <span t-esc="get_calculate['missing_days_amount']"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zorunlu BES</td>
+                                        <td>
+                                            <span t-esc="get_calculate['individual_pension']"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diğer</td>
+                                        <td>
+                                            <span t-esc="get_calculate['syndicate_deductions']"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-active">
+                                        <th>Toplam</th>
+                                        <th>
+                                            <span t-esc="get_calculate['total_deductions']"/>
+                                        </th>
+                                    </tr>
+                                </table>
+                                <table class="styled-table">
+                                    <h4 style="text-align:left" class="table-active">TEŞVİKLER</h4>
+                                    <tr style="background: #b7d5ac">
+                                        <th>İsim</th>
+                                        <th>Tutar</th>
+                                    </tr>
+                                    <t t-set="incentives_list" t-value="incentives['incentives_list']"/>
+                                    <t t-if="incentives_list">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-foreach="incentives_list" t-as="incentive">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="incentive['name']"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="incentive['incentive_total']"/>
+                                                </td>
+                                            </tr>
+                                            <t t-set="counter" t-value="counter+1"/>
+                                        </t>
+                                    </t>
+                                    <t t-if="not incentives_list">
+                                        <tr>
+                                            <td colspan="2" style="text-align:center;">Teşvik Yok</td>
+                                        </tr>
+                                    </t>
+                                    <tr class="table-active">
+                                        <th>Toplam</th>
+                                        <th>
+                                            <span t-esc="incentives['total']"/>
+                                        </th>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <div id="container1">
+                                <div id="fourth_part">
+                                    <table class="styled-table">
+                                        <h4 style="text-align:left" class="table-active">DİĞER</h4>
+                                        <tr style="background: #b7d5ac">
+                                            <th>Tür</th>
+                                            <th>Sayı</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Çalışılan Gün</th>
+                                            <td>
+                                                <span t-esc="get_calculate['regular_shift']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tatil Gün</th>
+                                            <td>
+                                                <span t-esc="get_calculate['holiday_days']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>İzin Günü</th>
+                                            <td>
+                                                <span t-esc="get_calculate['vacation_days']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Eksik Gün</th>
+                                            <td>
+                                                <span t-esc="get_calculate['missing_days']"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Kişi Sayısı</th>
+                                            <td>
+                                                <span t-esc="get_calculate['employee_total']"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </tbody>
+                    </body>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

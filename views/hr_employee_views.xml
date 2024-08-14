@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payroll_hr_employee_view_form" model="ir.ui.view">
+        <field name="name">payroll.hr.employee.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='personal_information']" position="inside">
+                <group>
+                    <group string="Military Service">
+                        <field name="military_service_status"/>
+                        <field name="discharge_date" required="military_service_status == 'done'"/>
+                        <field name="postponement_end_date" required="military_service_status == 'postponement'"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='coach_id']" position="after">
+                <field name="start_date_of_work"/>
+            </xpath>
+            <xpath expr="//page[@name='public']" position="inside">
+                <group string="Information">
+                    <field name="incentive_code"/>
+                    <field invisible="incentive_code not in ('06111', '06645', '25510', '16322', '14857')"
+                           name="benefit_05510"/>
+                    <field invisible="incentive_code not in ('06111', '06645', '25510', '16322', '14857')"
+                           name="benefit_06111"/>
+                    <field invisible="incentive_code not in ('06111', '06645', '25510', '16322')"
+                           name="incentive_start_date"/>
+                    <field invisible="incentive_code not in ('06111', '06645', '25510', '16322')"
+                           name="incentive_end_date"/>
+                    <field invisible="incentive_code not in ('06111', '06645', '25510', '16322')"
+                           name="incentive_days"/>
+                </group>
+            </xpath>
+            <xpath expr="//page[@name='hr_settings']" position="inside">
+                <group>
+                    <group string="Social Security">
+                        <field name="social_security_status"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="om_hr_employee_public_form_view_inherit" model="ir.ui.view">
+        <field name="name">om.hr.employee.public.leave.form.inherit</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='coach_id']" position="after">
+                <field name="start_date_of_work"/>
+            </xpath>
+        </field>
+    </record>
+    <menuitem action="action_print_report" id="menu_report_summary" name="Print Summary Report"
+              parent="hr_payroll.menu_hr_payroll_report" sequence="30"/>
+    <record id="hr_employee_summary_report" model="ir.actions.report">
+        <field name="name">Print Summary Report</field>
+        <field name="model">hr.employee.search</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_tr_hr_payroll.report_summary_templates</field>
+        <field name="report_file">l10n_tr_hr_payroll.report_summary_templates</field>
+        <field name="binding_model_id" ref="model_hr_employee_search"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

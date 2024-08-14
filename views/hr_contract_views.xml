@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_payroll_form_inherit" model="ir.ui.view">
+        <field name="name">hr.contract.view.form.inherit</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="struct_id" required="1"/>
+                <field name="type_salary" required="1"/>
+                <field name="disabled_degree" required="1"/>
+            </xpath>
+            <xpath expr="//group[@name='salary_info']" position="replace">
+                <group name="salary_info">
+                    <group name="salary">
+                        <label for="is_minimum_wage"/>
+                        <div class="o_row" name="is_minimum_wage">
+                            <field name="is_minimum_wage" nolabel="1"/>
+                        </div>
+                        <label for="wage"/>
+                        <div class="o_row" name="wage">
+                            <field name="wage" nolabel="1"/>
+                        </div>
+                        <label for="previous_cumulative_tax_base"/>
+                        <div class="o_row" name="previous_cumulative_tax_base">
+                            <field name="previous_cumulative_tax_base" nolabel="1"/>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

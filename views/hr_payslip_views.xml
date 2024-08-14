@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="hr_payslip_view_form_inherit">
+        <field name="name">hr.payslip.inherit.form.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_print_payslip']" position="after">
+                <button name="%(action_report_payslip)d" string="Print Payslip" type="action"/>
+                <button name="reduce_days_to_30" string="Reduce Days to 30" type="object"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

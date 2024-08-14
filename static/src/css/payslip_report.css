@@ -1,0 +1,127 @@
+/* Tablo 1: Klasik ve Zarif Stil */
+.table-classic {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0px 0;
+    font-size: 1em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.table-classic thead tr {
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table-classic th, .table-classic td {
+    padding: 6px 9px;
+    border: 1px solid #dddddd;
+}
+
+.table-classic tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.table-classic tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.table-classic th:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.table-classic th {
+    color: black;
+    font-weight: bold;
+    text-align: left;
+}
+
+.table-classic tbody td {
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.table-classic tbody tr:last-of-type {
+    border-bottom: 2px solid #f3f3f3;
+}
+
+
+/* Tablo 2: Modern ve Minimalist Stil */
+.table-modern {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    margin: 0px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+}
+
+.table-modern thead tr {
+    background-color: #333333;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table-modern th, .table-modern td {
+    padding: 3px 5px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.table-modern tbody tr {
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-modern tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.table-modern th {
+    background-color: #333333;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+}
+
+.table-modern tbody td {
+    text-align: left;
+}
+/* Tablo 3: Modern ve Minimalist Stil */
+.table-modern1 {
+    width: 50%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    margin: 0px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+}
+
+.table-modern1 thead tr {
+    background-color: #333333;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table-modern1 th, .table-modern td {
+    padding: 3px 5px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.table-modern1 tbody tr {
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-modern1 tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.table-modern1 th {
+    background-color: #333333;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+}

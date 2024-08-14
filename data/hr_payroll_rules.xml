@@ -1,0 +1,650 @@
+<odoo>
+    <data noupdate="1">
+
+        <!--        Standart Bordro Kuralları-->
+        <record id="structure_type_standard" model="hr.payroll.structure.type">
+            <field name="name">Turkey Standard</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <record id="l10n_tr_standard_payroll" model="hr.payroll.structure">
+            <field name="name">Turkey Payroll</field>
+            <field name="code">Turkey Payroll</field>
+            <field name="type_id" eval="ref('l10n_tr_hr_payroll.structure_type_standard')"/>
+        </record>
+        
+        <record id="INC" model="hr.salary.rule.category">
+            <field name="name">Incentives</field>
+            <field name="code">incentives</field>
+        </record>
+
+        <record id="regular_shift_basic" model="hr.salary.rule">
+            <field name="name">Regular Shift</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">regular_shift_basic</field>
+            <field name="sequence">1</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="weekend_holiday_basic" model="hr.salary.rule">
+            <field name="name">Weekend Holiday</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">weekend_holiday_basic</field>
+            <field name="sequence">1</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="missing_day_basic" model="hr.salary.rule">
+            <field name="name">Missing Day</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">missing_day_basic</field>
+            <field name="sequence">1</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="total_deductions" model="hr.salary.rule">
+            <field name="name">Total Deductions</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">total_deductions</field>
+            <field name="sequence">1</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="national_holiday_basic" model="hr.salary.rule">
+            <field name="name">National Holiday</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">national_holiday_basic</field>
+            <field name="sequence">1</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="food_allowance" model="hr.salary.rule">
+            <field name="name">Food Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">food_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="family_allowance" model="hr.salary.rule">
+            <field name="name">Family Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">family_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="child_allowance" model="hr.salary.rule">
+            <field name="name">Child Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">child_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="extra_shift_basic" model="hr.salary.rule">
+            <field name="name">Extra Shift</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">extra_shift_basic</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="overtime_shift_basic" model="hr.salary.rule">
+            <field name="name">Overtime Amount</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">overtime_shift_basic</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="holiday_shift_basic" model="hr.salary.rule">
+            <field name="name">Holiday Shift</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">holiday_shift_basic</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="bonus_allowance" model="hr.salary.rule">
+            <field name="name">Bonus Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">bonus_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="prim_allowance" model="hr.salary.rule">
+            <field name="name">Prim Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">prim_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="holiday_allowance" model="hr.salary.rule">
+            <field name="name">Holiday Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">holiday_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="fuel_allowance" model="hr.salary.rule">
+            <field name="name">Fuel Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">fuel_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="attendance_allowance" model="hr.salary.rule">
+            <field name="name">Attendance Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">attendance_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="death_allowance" model="hr.salary.rule">
+            <field name="name">Death Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">death_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="birth_allowance" model="hr.salary.rule">
+            <field name="name">Birth Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">birth_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="marriage_allowance" model="hr.salary.rule">
+            <field name="name">Marriage Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">marriage_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="advance_deductions" model="hr.salary.rule">
+            <field name="name">Advance Deductions</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">advance_deductions</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="execution_deductions" model="hr.salary.rule">
+            <field name="name">Execution Deductions</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">execution_deductions</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="syndicate_deductions" model="hr.salary.rule">
+            <field name="name">Syndicate Deductions</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">syndicate_deductions</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="severance_allowance" model="hr.salary.rule">
+            <field name="name">Severance Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">severance_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="notice_allowance" model="hr.salary.rule">
+            <field name="name">Notice Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">notice_allowance</field>
+            <field name="sequence">2</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="road_allowance" model="hr.salary.rule">
+            <field name="name">Road Allowance</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">road_allowance</field>
+            <field name="sequence">3</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="amount_gross" model="hr.salary.rule">
+            <field name="name">Gross Amount</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">amount_gross</field>
+            <field name="sequence">3</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="gross_earning_gross" model="hr.salary.rule">
+            <field name="name">Gross Earning</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">gross_earning_gross</field>
+            <field name="sequence">3</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="ssi_base_gross" model="hr.salary.rule">
+            <field name="name">SSI Base</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">ssi_base_gross</field>
+            <field name="sequence">4</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="ssi_worker_prim_rate_deductions" model="hr.salary.rule">
+            <field name="name">SSI Worker Prim Rate</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">ssi_worker_prim_rate_deductions</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="ssi_unemployment_worker_prim_rate_deductions" model="hr.salary.rule">
+            <field name="name">SSI Unemployment Worker Prim Rate</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">ssi_unemployment_worker_prim_rate_deductions</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="ssi_employer_prim_rate_basic" model="hr.salary.rule">
+            <field name="name">SSI Employer Prim Rate</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">ssi_employer_prim_rate_basic</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="ssi_unemployment_employer_prim_rate_gross" model="hr.salary.rule">
+            <field name="name">Ssc Unemployment Employer Prim Rate</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">ssi_unemployment_employer_prim_rate_gross</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="ssi_employer_share_incentives_deductions" model="hr.salary.rule">
+            <field name="name">SSI Employer Share Incentives</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">ssi_employer_share_incentives_deductions</field>
+            <field name="sequence">6</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">False</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="incentives_05510" model="hr.salary.rule">
+            <field name="name">05510 Incentives</field>
+            <field name="category_id" eval="ref('l10n_tr_hr_payroll.INC')"/>
+            <field name="code">incentives_05510</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="incentives_06111" model="hr.salary.rule">
+            <field name="name">06111 Incentives</field>
+            <field name="category_id" eval="ref('l10n_tr_hr_payroll.INC')"/>
+            <field name="code">incentives_06111</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="incentives_06486" model="hr.salary.rule">
+            <field name="name">06486 Incentives</field>
+            <field name="category_id" eval="ref('l10n_tr_hr_payroll.INC')"/>
+            <field name="code">incentives_06486</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="incentives_06645" model="hr.salary.rule">
+            <field name="name">06645 Incentives</field>
+            <field name="category_id" eval="ref('l10n_tr_hr_payroll.INC')"/>
+            <field name="code">incentives_06645</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="incentives_25510" model="hr.salary.rule">
+            <field name="name">25510 Incentives</field>
+            <field name="category_id" eval="ref('l10n_tr_hr_payroll.INC')"/>
+            <field name="code">incentives_25510</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="incentives_16322" model="hr.salary.rule">
+            <field name="name">16322 Incentives</field>
+            <field name="category_id" eval="ref('l10n_tr_hr_payroll.INC')"/>
+            <field name="code">incentives_16322</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="incentives_14857" model="hr.salary.rule">
+            <field name="name">14857 Incentives</field>
+            <field name="category_id" eval="ref('l10n_tr_hr_payroll.INC')"/>
+            <field name="code">incentives_14857</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="stamp_tax_base_basic" model="hr.salary.rule">
+            <field name="name">Stamp Tax Base</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">stamp_tax_base_basic</field>
+            <field name="sequence">6</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="stamp_tax_incentives_deductions" model="hr.salary.rule">
+            <field name="name">Stamp Tax Incentives</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">stamp_tax_incentives_deductions</field>
+            <field name="sequence">6</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="after_incentives_stamp_tax_base_net" model="hr.salary.rule">
+            <field name="name">After Incentives Stamp Tax Base</field>
+            <field name="category_id" eval="ref('hr_payroll.NET')"/>
+            <field name="code">after_incentives_stamp_tax_base_net</field>
+            <field name="sequence">6</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="stamp_tax_deductions" model="hr.salary.rule">
+            <field name="name">Stamp Tax</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">stamp_tax_deductions</field>
+            <field name="sequence">7</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="monthly_tax_base_gross" model="hr.salary.rule">
+            <field name="name">Monthly Tax Base</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">monthly_tax_base_gross</field>
+            <field name="sequence">8</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">False</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="minimum_wage_tax_base_gross" model="hr.salary.rule">
+            <field name="name">Minimum Wage Tax Base</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">minimum_wage_tax_base_gross</field>
+            <field name="sequence">9</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">False</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="individual_pension_net" model="hr.salary.rule">
+            <field name="name">Individual Pension</field>
+            <field name="category_id" eval="ref('hr_payroll.NET')"/>
+            <field name="code">individual_pension_net</field>
+            <field name="sequence">9</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">False</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="cumulative_tax_base_gross" model="hr.salary.rule">
+            <field name="name">Cumulative Tax Base</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">cumulative_tax_base_gross</field>
+            <field name="sequence">10</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="cumulative_minimum_wage_tax_base_gross" model="hr.salary.rule">
+            <field name="name">Cumulative Minimum Wage Tax Base</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">cumulative_minimum_wage_tax_base_gross</field>
+            <field name="sequence">10</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">False</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="tax_incentives_deductions" model="hr.salary.rule">
+            <field name="name">Tax Incentives</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">tax_incentives_deductions</field>
+            <field name="sequence">11</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">False</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="monthly_income_tax_net" model="hr.salary.rule">
+            <field name="name">Monthly Income Tax</field>
+            <field name="category_id" eval="ref('hr_payroll.NET')"/>
+            <field name="code">monthly_income_tax_net</field>
+            <field name="sequence">11</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">False</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="disabled_amount_allowance" model="hr.salary.rule">
+            <field name="name">Disabled Amount</field>
+            <field name="category_id" eval="ref('hr_payroll.ALW')"/>
+            <field name="code">disabled_amount_allowance</field>
+            <field name="sequence">11</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">False</field>
+            <field name="condition_select">python</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="after_incentives_income_tax_net" model="hr.salary.rule">
+            <field name="name">After Incentives Income Tax</field>
+            <field name="category_id" eval="ref('hr_payroll.NET')"/>
+            <field name="code">after_incentives_income_tax_net</field>
+            <field name="sequence">13</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="amount_net" model="hr.salary.rule">
+            <field name="name">Net Amount</field>
+            <field name="category_id" eval="ref('hr_payroll.NET')"/>
+            <field name="code">amount_net</field>
+            <field name="sequence">14</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <!--        Bordroda yer almayanlar-->
+        <record id="hourly_gross_basic" model="hr.salary.rule">
+            <field name="name">Hourly Gross</field>
+            <field name="category_id" eval="ref('hr_payroll.BASIC')"/>
+            <field name="code">hourly_gross_basic</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="cumulative_minimum_wage_income_base_deductions" model="hr.salary.rule">
+            <field name="name">Cumulative Minimum Wage Income Base</field>
+            <field name="category_id" eval="ref('hr_payroll.DED')"/>
+            <field name="code">cumulative_minimum_wage_income_base_deductions</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+        <record id="monthly_minimum_wage_tax_base_gross" model="hr.salary.rule">
+            <field name="name">Monthly Minimum Wage Tax Base</field>
+            <field name="category_id" eval="ref('hr_payroll.GROSS')"/>
+            <field name="code">monthly_minimum_wage_tax_base_gross</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="appears_on_payslip">True</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="struct_id" eval="ref('l10n_tr_hr_payroll.l10n_tr_standard_payroll')"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hr.payroll</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="45"/>
+        <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='hr_payroll']/block[@id='hr_payroll_localization']" position="replace">
+                <block title="Payroll Settings Türkiye" id="hr_payroll_localization_turkey">
+                    <div class="row mt16 o_settings_container" style="max-width:100%!important"
+                         id="hr_payroll_account1">
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="gross_minimum_wage"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="gross_minimum_wage" string="Current Gross Min. Wage Amount"/>
+                                <div class="text-muted">
+                                    Current Gross Min. Wage Amount
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="net_minimum_wage"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="net_minimum_wage" string="Current Net Min. Wage Amount"/>
+                                <div class="text-muted">
+                                    Current Net Min. Wage Amount
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="ssi_ceiling_amount"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ssi_ceiling_amount" string="SSI Ceiling Amount"/>
+                                <div class="text-muted">
+                                    SSI Ceiling Amount
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="first_degree_disabled_discount"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="first_degree_disabled_discount" string="1.Degree Disabled Disc."/>
+                                <div class="text-muted">
+                                    1.Degree Disabled Disc.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="second_degree_disabled_discount"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="second_degree_disabled_discount" string="2.Degree Disabled Disc."/>
+                                <div class="text-muted">
+                                    2.Degree Disabled Disc.
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="third_degree_disabled_discount"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="third_degree_disabled_discount" string="3.Degree Disabled Disc."/>
+                                <div class="text-muted">
+                                    3.Degree Disabled Disc.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-12 o_setting_box">
+
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row mt16 o_settings_container" style="max-width:100%!important"
+                         id="hr_payroll_account1">
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="ssi_worker_prim_rate"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ssi_worker_prim_rate" string="SSI Worker Prim Rate"/>
+                                <div class="text-muted">
+                                    SSI Worker Prim Rate
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="ssi_unemployment_worker_rate"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ssi_unemployment_worker_rate" string="SSI Unempl. Worker Prim Rate"/>
+                                <div class="text-muted">
+                                    SSI Unempl. Worker Prim Rate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="ssi_worker_retired_rate"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ssi_worker_retired_rate" string="SSI Worker Retired Rate"/>
+                                <div class="text-muted">
+                                    SSI Worker Retired Rate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+
+                        </div>
+
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="ssi_employer_prim_rate"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ssi_employer_prim_rate" string="SSI Employer Prim Rate"/>
+                                <div class="text-muted">
+                                    SSI Employer Prim Rate
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="ssi_unemployment_employer_rate"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ssi_unemployment_employer_rate"
+                                       string="SSI Unempl. Employer Prim Rate"/>
+                                <div class="text-muted">
+                                    SSI Unempl. Employer Prim Rate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="ssi_employer_retired_rate"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ssi_employer_retired_rate" string="SSI Employer Retired Rate"/>
+                                <div class="text-muted">
+                                    SSI Employer Retired Rate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="stump_tax_rate"/>
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="stump_tax_rate" string="Stamp Tax Rate"/>
+                                <div class="text-muted">
+                                    Stamp Tax Rate
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row mt16 o_settings_container" style="max-width:100%!important"
+                         id="hr_payroll_account1">
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="extra_shift_rate"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="extra_shift_rate" string="Extra Shift Coefficient"/>
+                                <div class="text-muted">
+                                    Extra Shift Coefficient
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="overtime_shift_rate"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="overtime_shift_rate" string="Overtime Coefficient"/>
+                                <div class="text-muted">
+                                    Overtime Coefficient
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="holiday_shift_rate"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="holiday_shift_rate" string="Holiday Coefficient"/>
+                                <div class="text-muted">
+                                    Holiday Coefficient
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="food_allowance_rate"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="food_allowance_rate" string="Food Alw. Coefficient"/>
+                                <div class="text-muted">
+                                    Food Alw. Coefficient
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="family_allowance_rate"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="family_allowance_rate" string="Family Alw. Coefficient"/>
+                                <div class="text-muted">
+                                    Family Alw. Coefficient
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="individual_pension_rate"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="individual_pension_rate" string="Individual Pension Coefficient"/>
+                                <div class="text-muted">
+                                    Individual Pension Coefficient
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row mt16 o_settings_container" style="max-width:100%!important"
+                         id="hr_payroll_account1">
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="first_part_tax"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="first_part_tax" string="First Tax Ceiling Price"/>
+                                <div class="text-muted">
+                                    First Tax Ceiling Price
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="second_part_tax"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="second_part_tax" string="Second Tax Ceiling Price"/>
+                                <div class="text-muted">
+                                    Second Tax Ceiling Price
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="third_part_tax"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="third_part_tax" string="Third Tax Ceiling Price"/>
+                                <div class="text-muted">
+                                    Third Tax Ceiling Price
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="fourth_part_tax"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="fourth_part_tax" string="Fourth Tax Ceiling Price"/>
+                                <div class="text-muted">
+                                    Fourth Tax Ceiling Price
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="first_part_tax_ratio"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="first_part_tax_ratio" string="First Tax Bracket Rate"/>
+                                <div class="text-muted">
+                                    First Tax Bracket Rate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="second_part_tax_ratio"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="second_part_tax_ratio" string="Second Tax Bracket Rate"/>
+                                <div class="text-muted">
+                                    Second Tax Bracket Rate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="third_part_tax_ratio"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="third_part_tax_ratio" string="Third Tax Bracket Rate"/>
+                                <div class="text-muted">
+                                    Third Tax Bracket Rate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="fourth_part_tax_ratio"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="fourth_part_tax_ratio" string="Fourth Tax Bracket Rate"/>
+                                <div class="text-muted">
+                                    Fourth Tax Bracket Rate
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <field name="fifth_part_tax_ratio"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="fifth_part_tax_ratio" string="Fifth Tax Bracket Rate"/>
+                                <div class="text-muted">
+                                    Fifth Tax Bracket Rate
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

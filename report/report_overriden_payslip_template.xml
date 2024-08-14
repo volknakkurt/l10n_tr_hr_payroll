@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_overridden_payslip_tmpl_old">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="o">
+				<t t-call="web.external_layout">
+					<div class="page">
+						<h2>BORDRO</h2>
+						<p t-field="o.name"/>
+						<table class="table table-sm table-bordered">
+							<tr>
+								<td>
+									<strong>Name</strong>
+								</td>
+								<td>
+									<span t-field="o.employee_id"/>
+								</td>
+								<td>
+									<strong>Designation</strong>
+								</td>
+								<td>
+									<span t-field="o.employee_id.job_id"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Email</strong>
+								</td>
+								<td>
+									<span t-field="o.employee_id.work_email"/>
+								</td>
+								<td>
+									<strong>Identification No</strong>
+								</td>
+								<td>
+									<span t-field="o.employee_id.identification_id"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Reference</strong>
+								</td>
+								<td>
+									<span t-field="o.number"/>
+								</td>
+								<td>
+									<strong>Bank Account</strong>
+								</td>
+								<td>
+									<span t-field="o.employee_id.bank_account_id"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Date From</strong>
+								</td>
+								<td>
+									<span t-field="o.date_from"/>
+								</td>
+								<td>
+									<strong>Date To</strong>
+								</td>
+								<td>
+									<span t-field="o.date_to"/>
+								</td>
+							</tr>
+						</table>
+						<div class="row">
+							<div class="col-5">
+								<div class="row">
+									<div class="col-12">
+										<table class="table table-sm table-bordered">
+											<thead class="text-weight">
+												<tr>
+													<th colspan="3" class="text-center font-weight-bold">Kazançlar</th>
+												</tr>
+												<tr>
+													<th>Ad</th>
+													<th>Saat</th>
+													<th>Ücret</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr t-foreach="o.worked_days_line_ids.filtered(lambda worked_days: worked_days.number_of_hours > 0 and worked_days.code != 'EKSIK_GUN' )" t-as="worked_days">
+													<td>
+														<t t-if="worked_days.code == 'NET'">
+															<span class="font-weight-bold" t-field="worked_days.name"/>
+														</t>
+														<t t-else="">
+															<span t-field="worked_days.name"/>
+														</t>
+													</td>
+													<td>
+														<t t-if="worked_days.code == 'NET'">
+															<span class="font-weight-bold" t-esc="worked_days.number_of_hours"/>
+														</t>
+														<t t-else="">
+															<span t-esc="worked_days.number_of_hours"/>
+														</t>
+													</td>
+													<td>
+														<t t-if="worked_days.code == 'NET'">
+															<span class="font-weight-bold" t-esc="o.line_ids.filtered(lambda line: line.code==worked_days.code).total" 
+                                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+														</t>
+														<t t-else="">
+															<span t-esc="o.line_ids.filtered(lambda line: line.code==worked_days.code).total" 
+                                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+														</t>
+													</td>
+												</tr>
+												<t t-if="o.input_line_ids.filtered(lambda input: input.amount > 0)">
+													<tr>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+												</t>
+												<tr t-foreach="o.input_line_ids.filtered(lambda input: input.amount > 0 and input.code not in ['AVANS','ICRA','SENDIKA','YEMEK_GUN_SAYISI'] )" t-as="input">
+													<td>
+														<span t-field="input.name"/>
+													</td>
+													<td></td>
+													<td>
+														<span t-field="input.amount"  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td>
+														<span  class="font-weight-bold" >Toplam NET KAZANÇ</span>
+													</td>
+													<td></td>
+													<td>
+														<span  class="font-weight-bold"  t-esc="o.line_ids.filtered(lambda line: line.code=='NET').total" 
+                                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+													</td>
+												</tr>
+												<tr class="table-active">
+													<td>
+														<span  class="font-weight-bold" >Toplam BRÜT KAZANÇ</span>
+													</td>
+													<td></td>
+													<td>
+														<span  class="font-weight-bold"  t-esc="o.line_ids.filtered(lambda line: line.code=='BRUT_KAZANC').total" 
+                                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+                                     </div>
+                                    <div class="row mt-4">
+                                    <t t-if="o.line_ids.filtered(lambda line: line.total > 0 and line.code in ['EKSIK_GUN','AVANS','ICRA','SENDIKA'] )">
+									<div class="col-12">
+										<table class="table table-sm table-bordered">
+											<thead class="text-weight">
+												<tr>
+													<th colspan="3" class="text-center font-weight-bold">Kesintiler</th>
+												</tr>
+												<tr>
+													<th>Ad</th>
+													<th>Saat</th>
+													<th>Ücret</th>
+												</tr>
+											</thead>
+											<tbody>
+											
+												<tr t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.code in ['EKSIK_GUN','AVANS','ICRA','SENDIKA'] )" t-as="line">
+													<td>
+														<span t-field="line.name"/>
+													</td>
+                                                    <t t-if="line.code == 'EKSIK_GUN'">
+														<td>
+                                                            <span t-esc="o.worked_days_line_ids.filtered(lambda worked_day: worked_day.code == 'EKSIK_GUN').number_of_hours"/>
+                                                        </td>
+													</t>
+													<t t-else="">
+														<td>
+                                                        </td>
+													</t>
+                                                   
+													<td>
+														<span t-esc="line.total"  t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+											
+												<tr class="table-active">
+													<td>
+														<span  class="font-weight-bold" >Kesintiler Toplamı</span>
+													</td>
+													<td></td>
+													<td>
+														<span  class="font-weight-bold"  t-esc="o.line_ids.filtered(lambda line: line.code=='TOTAL_KESINTI').total" 
+                                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+                                    </t>
+								</div>
+							</div>
+                            <div class="col-7">
+								<div class="row">
+									<div class="col-12">
+										<table class="table table-sm">
+											<tbody>
+                                            	<tr>
+													<td>
+															<span>SGK Prim Günü</span>
+													</td>
+                                                    <td>
+															<span>30 Gün</span>
+													</td>
+												</tr>
+                                            
+												<tr t-foreach="o.line_ids.filtered(lambda line: line.total > 0 and line.salary_rule_id.appears_on_payslip)" t-as="line">
+                                                    <td>
+														<t t-if="line.code == 'NET'">
+															<span class="font-weight-bold" t-field="line.name"/>
+														</t>
+														<t t-else="">
+															<span t-field="line.name"/>
+														</t>
+													</td>
+													<td>
+														<t t-if="line.code == 'NET'">
+															<span class="font-weight-bold" t-esc="line.total"
+                                                             t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+														</t>
+														<t t-else="">
+														<span t-esc="line.total"
+                                                             t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+														</t>
+													</td>
+												</tr>
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<p class="text-right">
+							<strong>Yetkili İmza</strong>
+						</p>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+</odoo>
